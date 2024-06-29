@@ -1,0 +1,245 @@
+*, *:before, *:after{
+  box-sizing: border-box;
+}
+
+html, body, div, span, object, iframe, figure, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, code, em, img, small, strike, strong, sub, sup, tt, b, u, i, ol, ul, li, fieldset, form, label, table, caption, tbody, tfoot, thead, tr, th, td, main, canvas, embed, footer, header, nav, section, video{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: none;
+  font-family: 'Inconsolata', monospace;
+  font-size: 1rem;
+}
+
+footer, header, nav, section, main{
+  display: block;
+}
+
+body{
+  line-height: 1;
+  background: 'linear-gradient(to bottom, #FFDEAD, #FFCCA7)', // Change this line
+
+}
+
+ol, ul{
+  list-style: none;
+}
+
+blockquote, q{
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after{
+  content: '';
+  content: none;
+}
+
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input{
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+
+.audio-recorder {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+.audio-recorder-timer {
+    display: none;
+}
+
+.audio-recorder-status {
+    display: none !important;
+}
+
+.audio-recorder-options {
+    display: none;
+}
+
+
+
+
+@keyframes fadeInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-10%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+@keyframes fadeInLeftDelayed {
+    0% {
+      opacity: 0;
+      transform: translateX(-10%);
+    }
+    50% {
+      opacity: 0;
+      transform: translateX(-10%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(10%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.animation-fade-right {
+    animation: fadeInLeft .8s cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+.animation-fade-right-delayed {
+  animation: fadeInLeftDelayed 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+.animation-fade-right-slow {
+    animation: fadeInLeft 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+}
+
+.animation-fade-up {
+    animation: fadeInUp .8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animation-fade-up-slow {
+    animation: fadeInUp 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.modal {
+    animation: zoomIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header {
+
+  &__page {
+    font-family: Libre Baskerville, serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #610000;
+  }
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__container {
+    padding: 0 1.5rem;
+  }
+  &__header {
+    font-family: Libre Baskerville, serif;
+    font-size: 2.4rem;
+    //font-weight: bold;
+    color: #610000;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+
+  }
+}
+
+.font {
+
+  &__large {
+    font-size: 1.5rem;
+  }
+}
+
+
+.home-tile {
+  &__container {
+    position: relative;
+
+  }
+  &__image {
+    width: 100%;
+    height: 10rem;
+    object-fit: cover;
+  }
+
+  &__button {
+    position: absolute;
+    background-color: black;
+    width: fit-content;
+    color: white;
+    padding: 1rem;
+    font-size: 2.0rem;
+    //font-weight: bold;
+  }
+}
+
+.icon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.circle {
+  position: fixed;
+  //transform: translate(-50%, -50%);
+  background-color: #000;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: grow .5s forwards;
+}
+
+@keyframes grow {
+  0% {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  100% {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    
+    transform: none;
+  }
+}
