@@ -80,6 +80,19 @@ const challangeMe = async (prompt) => {
 
 }
 
+const listen = async (prompt) => {
+
+ const audioFile = fs.createReadStream('C:/Users/ashmi/Documents/Projects/project-celebi/src/AI/stubs/speech.mp3');
+
+ 
+ const transcript = await openai.audio.transcriptions.create({
+     file:audioFile,
+     model:"whisper-1",
+ });
+ 
+ return transcript
+}
+
 
 
 module.exports = {
