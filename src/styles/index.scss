@@ -156,6 +156,13 @@ input{
     font-weight: bold;
     color: #610000;
   }
+
+  &__description {
+    //font-family: Libre Baskerville, serif;
+    //font-size: 1.2rem;
+    margin-top: .6rem;
+    color: #610000;
+  }
 }
 
 .list {
@@ -241,5 +248,33 @@ input{
     border-radius: 0;
     
     transform: none;
+  }
+}
+
+
+.my-toast-container {
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.item {
+  &__container {
+    background-Color: #290606;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+    font-family: Inconsolata;
+    font-weight: 500;
+    font-size: 1.6rem;
+    box-shadow: -10px 12px 0px 0px #DC7A7A; // Add this line
+    margin-bottom: 10px
+  }
+
+  &__name {
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 }

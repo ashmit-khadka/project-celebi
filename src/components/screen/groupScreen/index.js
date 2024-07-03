@@ -19,7 +19,7 @@ const GroupScreen = () => {
 
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { user, setUser } = useContext(AppContext);
+	const { user, notify } = useContext(AppContext);
 
 	const [group, setGroup] = useState([])
 	const [screenState, setScreenState] = useState(GroupScreenStates.POSTS)
@@ -71,7 +71,8 @@ const GroupScreen = () => {
 				}
 			});
 			console.log(response.data);
-			getGroupPosts()
+			navigate('/groups')
+			notify('Left group!')
 		} catch (error) {
 			console.error('Error leaving group', error);
 		}
@@ -87,6 +88,7 @@ const GroupScreen = () => {
 			});
 			console.log(response.data);
 			getGroupPosts()
+			notify('Joined group!')
 		} catch (error) {
 			console.error('Error joining group', error);
 		}
@@ -102,6 +104,7 @@ const GroupScreen = () => {
 			});
 			console.log(response.data);
 			navigate('/groups')
+			notify('Deleted group!')
 		} catch (error) {
 			console.error('Error joining group', error);
 		}
@@ -137,22 +140,26 @@ const GroupScreen = () => {
 					alt={group.info?.name}
 				/>
 				<div
-					className="header__page"
+					
 				>
-					{group.info?.name}
+					<div
+						className="header__page"
+					>
+						{group.info?.name}
+					</div>
+					<div
+						className="header__description"
+					>{group.info?.description}</div>
+
 				</div>
 			</div>
-			<img
-				style={{
-					width: "2rem",
-					height: "2rem",
-					objectFit: "cover",
-				}}
-				src={GroupScreenStates.POSTS ? IconPosts : IconLeaderboard}
-				alt={group.info?.name}
-				onClick={() => toggleScreenState()}
-			/>
-			<div>
+			<div
+				className="list"
+			>
+				<Button
+					text={screenState === GroupScreenStates.POSTS ? "View leaderboard" : "View posts"}
+					onClick={() => toggleScreenState()}
+				/>
 				{isUserInGroup && (
 					<Button
 						text="Leave group"
@@ -200,7 +207,7 @@ const GroupPosts = (props) => {
 			className="animation-fade-right"
 		>
 			{posts && posts.map((post) => (
-				<Post 
+				<Post
 					key={post._id}
 					title={post.title}
 					likes={post.likes}
@@ -208,6 +215,8 @@ const GroupPosts = (props) => {
 					image={post.image}
 					comments={post.comments}
 					onClick={() => onPostClick(post._id)}
+					timestamp={post.timestamp}
+					preview
 				/>
 			))}
 		</div>

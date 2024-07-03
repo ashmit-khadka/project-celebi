@@ -8,12 +8,16 @@ import Button from "./button";
 import moment from 'moment';
 import { useNavigate } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const Post = (props) => {
-	const { id, title, likes, user, image, comments, onClick, challenge, preview } = props
+	const { id, title, likes, user, image, comments, onClick, challenge, preview, timestamp } = props
 
 	const navigate = useNavigate();
 	const [comment, setComment] = useState('');
-	const { user: currentUser } = useContext(AppContext);
+	const { user: currentUser, notify } = useContext(AppContext);
 	const [currentComments, setCurrentComments] = useState([...comments]);
 	const [currentLikes, setCurrentLikes] = useState([...likes]);
 
@@ -31,6 +35,10 @@ const Post = (props) => {
 			.catch(error => {
 				console.error(error);
 			});
+	}
+
+	const onProfileClick = () => {
+		navigate('/profile', { state: { user: user._id } })
 	}
 
 	const postComment = async () => {
@@ -51,6 +59,7 @@ const Post = (props) => {
 			postId: id,
 		})
 		setCurrentLikes([...response.data.likes])
+		notify("Liked!")
 	}
 
 	const isLiked = useMemo(() => {
@@ -69,17 +78,15 @@ const Post = (props) => {
 
 	}
 
-
-	console.log(currentComments)
-
 	return (
 		<div
 			style={{
 				fontFamily: 'Inconsolata',
 				fontSize: '1.4rem',
 			}}
-			onClick={onClick}
 		>
+
+
 			<div
 				style={{
 					display: 'flex',
@@ -87,6 +94,7 @@ const Post = (props) => {
 					alignItems: 'center',
 					gap: '1rem',
 				}}
+				onClick={onProfileClick}
 			>
 				<img
 					style={{
@@ -101,12 +109,36 @@ const Post = (props) => {
 					<div
 						style={{
 							fontWeight: 'bold',
+							display: 'flex',
+							alignItems: 'center',
 						}}
-					>{user?.name}</div>
+					>{user?.name}
+						<div
+							style={{
+								width: '.3rem',
+								height: '.3rem',
+								backgroundColor: '#4b4b4b',
+								borderRadius: '50%',
+								margin: '0 .75rem',
+							}}
+						>
+						</div>
+						<div
+							style={{
+								fontSize: '1rem',
+								fontWeight: 'normal',
+							}}
+						>
+							{moment(timestamp).fromNow()}
+						</div>
+					</div>
 					<div>Level {user?.level}</div>
 				</div>
 			</div>
-			<div>
+			<div
+				onClick={onClick}
+
+			>
 				<h3
 					style={{
 						padding: '1rem',
@@ -145,7 +177,7 @@ const Post = (props) => {
 						alignItems: 'center',
 					}}
 				>
-					<IconLike 
+					<IconLike
 						style={{
 							width: '2rem',
 							height: '2rem',
@@ -173,7 +205,7 @@ const Post = (props) => {
 
 				</div>
 			</div>
-			{preview && (
+			{!preview && (
 				<div
 					style={{
 						display: 'flex',
@@ -181,7 +213,14 @@ const Post = (props) => {
 						gap: '1rem',
 					}}
 				>
-					<div>
+					{/* Post description */}
+					<div
+						style={{
+							padding: '1rem',
+							backgroundColor: '#DC7A7A',
+							color: 'black',
+						}}
+					>
 						ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae odio. ipsum dolor sit amet, consectetur adipiscing elit. Donec nec odio vitae odio
 					</div>
 					<Button
@@ -254,7 +293,7 @@ const Post = (props) => {
 										display: 'flex',
 										flexDirection: 'column',
 										gap: '.5rem',
-									
+
 									}}
 								>
 									<div
@@ -272,8 +311,8 @@ const Post = (props) => {
 												borderRadius: '50%',
 												margin: '0 .75rem',
 											}}
-											>
-											</div>
+										>
+										</div>
 										<div
 											style={{
 												fontSize: '1rem',

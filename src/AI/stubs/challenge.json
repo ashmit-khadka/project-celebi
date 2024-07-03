@@ -5,7 +5,8 @@
       "goals": "Sustainable Development Goal 12: Responsible Consumption and Production",
       "description": "Cut down on paper usage by taking digital notes, printing only when necessary, and recycling paper to support SDG 12.",
       "image": "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_1.png",
-      "points": 20
+      "points": 20,
+      "impact": "Reducing energy consumption in a challenge promotes sustainability, lowers costs, reduces carbon footprint, and fosters eco-conscious behavior globally"
     },
     {
       "title": "Promote Biodiversity",
@@ -13,7 +14,8 @@
       "goals": "Sustainable Development Goal 15: Life on Land",
       "description": "Contribute to biodiversity conservation by planting native plants, creating green spaces, and supporting wildlife habitats for SDG 15.",
       "image": "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_2.png",
-      "points": 40
+      "points": 40,
+      "impact": "Promoting biodiversity helps maintain ecosystems, supports food security, and protects endangered species and habitats"
     },
     {
       "title": "Reduce Water Consumption",
@@ -21,7 +23,8 @@
       "goals": "Sustainable Development Goal 6: Clean Water and Sanitation",
       "description": "Save water by using it wisely, fixing leaks, and opting for water-efficient appliances to help achieve SDG 6.",
       "image": "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_3.png",
-      "points": 15
+      "points": 15,
+      "impact": "Reducing water consumption conserves natural resources, lowers utility bills, and protects water quality for future generations"
     },
     {
       "title": "Encourage Sustainable Eating",
@@ -29,6 +32,7 @@
       "goals": "Sustainable Development Goal 2: Zero Hunger",
       "description": "Support sustainable food choices like plant-based meals, local produce, and reducing food waste to advance SDG 2.",
       "image": "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_4.png",
-      "points": 20
+      "points": 20,
+      "impact": "Promoting sustainable eating habits helps reduce greenhouse gas emissions, conserve natural resources, and improve public health"
     }
   ]

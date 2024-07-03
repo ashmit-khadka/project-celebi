@@ -7,7 +7,7 @@ const Textbox = ({ text, handleTextChange }) => {
         backgroundColor: 'black',
         color: 'white',
         fontFamily: 'Inconsolata',
-        fontSize: '1.2rem',
+        //fontSize: '1.2rem',
         height: '5rem',
         width: '100%',
         padding: '.5rem'

@@ -44,20 +44,20 @@ const Header = () => {
 
 
 
-  useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8080/notifications?userId=${user?._id}`);
+	useEffect(() => {
+		const ws = new WebSocket(`ws://localhost:8080/notifications?userId=${user?._id}`);
 
-    ws.onmessage = (event) => {
-      const change = JSON.parse(event.data);
+		ws.onmessage = (event) => {
+			const change = JSON.parse(event.data);
 			console.log(change)
-      setData(change);
-    };
+			setData(change);
+		};
 
-    return () => {
-      ws.close();
-    };
+		return () => {
+			ws.close();
+		};
 
-  }, [user]);
+	}, [user]);
 
 	if (location.pathname === '/login') {
 		return null
@@ -94,7 +94,7 @@ const Header = () => {
 					width: '3rem',
 					height: '3rem',
 					borderRadius: '50%',
-					zIndex: 100
+					zIndex: 10
 
 				}}
 				src={user?.image} alt="menu"
@@ -115,12 +115,15 @@ const Header = () => {
 						background: 'linear-gradient(to bottom, #FFD597, #FFD1A7)', // Change this line
 						zIndex: 10,
 						padding: '1.5rem',
-						
+
 					}}
 				>
 					{/* Your overlay menu here */}
 					<div
 						className='animation-fade-right-delayed'
+						style={{
+							marginTop: '5rem',
+						}}
 					>
 						<div
 							style={{
@@ -136,6 +139,16 @@ const Header = () => {
 
 						</div>
 						<Button
+							style={{
+								marginTop: '2rem',
+							}}
+							text="My Profile"
+							onClick={() => navigate('/profile', { state: { user: user?._id } })}
+						/>
+						<Button
+							style={{
+								marginTop: '2rem',
+							}}
 							text="Logout"
 						/>
 					</div>

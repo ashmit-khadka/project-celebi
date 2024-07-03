@@ -39,7 +39,7 @@ const PostScreen = () => {
           image={post?.image}
           comments={post?.comments}
           challenge={post?.challenge}
-          preview
+          timestamp={post?.timestamp}
         />
       )}
     </div>

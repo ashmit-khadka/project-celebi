@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./User');
 
 const ChallengeSchema = new mongoose.Schema({
   title: {
@@ -21,8 +20,16 @@ const ChallengeSchema = new mongoose.Schema({
   },
   points: {
     type: Number,
-    required: true
+    default: 0
   },
+  created: {
+    type: Date,
+    default: Date.now
+  },
+  impact: {
+    type: String,
+    required: true,
+  }
 });
 
 const Challenge = mongoose.model('Challenges', ChallengeSchema);

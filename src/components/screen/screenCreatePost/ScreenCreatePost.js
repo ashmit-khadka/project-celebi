@@ -20,6 +20,8 @@ const ScreenCreatePost = () => {
 	const navigate = useNavigate();
 	const challenge = location.state?.challenge;
 
+	const { notify } = useContext(UserContext);
+
   const { user, setUser } = useContext(UserContext);
 
 	const [text, setText] = React.useState("")
@@ -65,7 +67,7 @@ const ScreenCreatePost = () => {
 			});
 			console.log(response.data);
 			navigate("/challenge/created", { state: { challenge: challenge } })
-
+			notify('Challenge completed!')
 		} catch (err) {
 			console.error(err);
 		}
@@ -206,7 +208,8 @@ const ScreenCreatePost = () => {
 				title={text}
 				image={preview || ImagePlaceholder}
 				user={user}
-				likes={0}
+				likes={[]}
+				comments={[]}
 			/>
 
 

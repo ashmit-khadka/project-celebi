@@ -14,10 +14,11 @@ const { default: mongoose } = require('mongoose');
 const Comment = require('../models/Comment');
 const Like = require('../models/Like');
 const Notification = require('../models/Notification');
+require('dotenv').config();
 
 AWS.config.update({
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  accessKeyId: "AKIAW3MEF3D347A2YX7N",
+  secretAccessKey: "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",
   region: "eu-north-1"
 });
 
@@ -61,7 +62,8 @@ router.post('/upload', upload.single('file'), async (req, res) => {
         image: data.Location,
         title: req.body.title,
         description: req.body.description,
-        likes: 0,
+        likes: [],
+        comments: [],
         user: user._id,
         challenge: new mongoose.Types.ObjectId("6675bf0bc69192b7de20f0dd"),
         groups: groups.map(group => group._id), // Use the _id of each group

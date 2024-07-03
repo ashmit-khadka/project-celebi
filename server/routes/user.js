@@ -80,4 +80,13 @@ router.post('/register', async (req, res) => {
 });
 
 
+router.get('/profile', async (req, res) => {
+  const { userId } = req.query;
+
+  const posts = await Post.find({ user: userId }).sort({ timestamp: -1 });
+  const user = await User.findById(userId);
+  res.send({ posts, user });
+});
+
+
 module.exports = router;

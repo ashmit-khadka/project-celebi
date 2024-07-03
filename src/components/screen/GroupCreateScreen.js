@@ -12,13 +12,15 @@ import dataNinja from "../../utilities/axios";
 import Post from "../Post";
 import UserContext from "../../utilities/context";
 import ImagePlaceholder from "../../assets/images/image_placeholder.jpeg";
-
+import AppContext from "../../utilities/context";
 
 const GroupCreateScreen = () => {
 
 	const location = useLocation();
 	const navigate = useNavigate();
 	const challenge = location.state?.challenge;
+
+	const { notify } = useContext(AppContext);
 
   const { user, setUser } = useContext(UserContext);
 
@@ -69,8 +71,13 @@ const GroupCreateScreen = () => {
 				headers: {
 					'Content-Type': 'multipart/form-data',
 				},
+				params: {
+					userId: user._id
+				}
 			});
 			console.log(response.data);
+			navigate('/groups')
+			notify('Created group!')
 			//navigate("/challenge/created", { state: { challenge: challenge } })
 
 		} catch (err) {

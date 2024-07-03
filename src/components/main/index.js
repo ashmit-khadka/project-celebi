@@ -12,11 +12,12 @@ import { Link } from "react-router-dom";
 
 import Image from "../../assets/images/home_avatar.png"
 import ChallengeList from "../challengeList";
-import Challange from "../challenge/challenge";
+import Challange from "../Challenge";
 
 import { useNavigate } from "react-router-dom";
 import AppContext from "../../utilities/context";
 import Textbox from "../controls/Textbox";
+import dataNinja from "../../utilities/axios";
 
 const steps = {
 	STEP_A: 'STEP_A',
@@ -36,8 +37,6 @@ const Main = () => {
 		data: {},
 		progress: 1
 	})
-
-
 	const [challanges, setChallenges] = useState([])
 
 	const updateScreen = (newScreen, data = {}) => {
@@ -58,8 +57,6 @@ const Main = () => {
 		setScreen(newScreenObj)
 	}
 
-	console.log(screen)
-
 	return (
 		<div
 			className="modal"
@@ -77,7 +74,7 @@ const Main = () => {
 			/>
 			{screen.screen === steps.STEP_A && <STEP_A updateScreen={updateScreen} screenData={screen} />}
 			{screen.screen === steps.STEP_B && <STEP_B updateScreen={updateScreen} screenData={screen} />}
-			{screen.screen === steps.STEP_C && <STEP_C updateScreen={updateScreen} screenData={screen} challenges={challanges} />}
+			{screen.screen === steps.STEP_C && challanges && <STEP_C updateScreen={updateScreen} screenData={screen} challenges={challanges} />}
 			{screen.screen === steps.STEP_CHALLANGE && <ChallangeScreen updateScreen={updateScreen} screenData={screen} />}
 			{screen.screen === steps.STEP_LOADING && <LoadingScreen updateScreen={updateScreen} screenData={screen} setChallenges={setChallenges} />}
 			{screen.screen === steps.STEP_CONFIRM && <Step_Confirm updateScreen={updateScreen} screenData={screen} />}
@@ -134,18 +131,10 @@ const STEP_A = (props) => {
 const STEP_B = (props) => {
 	const { updateScreen } = props
 
-	const [text, setText] = useState('');
+	const [text, setText] = useState('going on holdiday to thailand for a week');
 
 	const handleChange = (event) => {
 		setText(event.target.value);
-	};
-
-	const addAudioElement = (blob: Blob) => {
-		const url = URL.createObjectURL(blob);
-		const audio = document.createElement('audio');
-		audio.src = url;
-		audio.controls = true;
-		document.body.appendChild(audio);
 	};
 
 	const challenge = () => {
@@ -162,50 +151,20 @@ const STEP_B = (props) => {
 				justifyContent: 'space-between'
 			}}
 		>
-
-
 			<h2
 				className="screen__header"
 			>
 				Tell me about your day
 			</h2>
-
-			{/* <AudioRecorder
-                classes={{
-                    AudioRecorderClass : 'test',                        
-                }}
-                onRecordingComplete={addAudioElement}
-                audioTrackConstraints={{
-                noiseSuppression: true,
-                echoCancellation: true,
-                // autoGainControl,
-                // channelCount,
-                // deviceId,
-                // groupId,
-                // sampleRate,
-                // sampleSize,
-                }}
-                onNotAllowedOrFound={(err) => console.table(err)}
-                downloadOnSavePress={true}
-                downloadFileExtension="mp3"
-                mediaRecorderOptions={{
-                audioBitsPerSecond: 128000,
-                }}
-                // showVisualizer={true}
-            /> */}
-			{/* <VoiceRecorder /> */}
 			<div
 				style={{
 					height: '100%'
 				}}
 			>
-
-				<Textbox 
+				<Textbox
 					text={text}
 					onChange={handleChange}
 				/>
-
-		
 				<div
 					style={{
 						display: 'flex',
@@ -214,52 +173,34 @@ const STEP_B = (props) => {
 						paddingTop: '1rem',
 					}}
 				>
-
-
 					<Button
 						text="Challenge Me!"
 						onClick={() => challenge()}
 					/>
-
 					<Button
 						text="Back"
 						onClick={() => updateScreen(steps.STEP_A)}
 					/>
-
 				</div>
-
-
 			</div>
-
 		</div>
 	)
 }
 
 
 const STEP_C = (props) => {
-	const { updateScreen, screenData, challenges } = props
-	const { setPageMeta } = useContext(AppContext)
+	const { updateScreen, challenges } = props
 
 	const onChallangeClick = (challange) => {
 		updateScreen(steps.STEP_CHALLANGE, {
-			title: challange.title,
-			description: challange.description,
-			image: challange.image
+			...challange,
 		})
 	}
-
-	useEffect(() => {
-		setPageMeta({
-			title: 'Select a challenge'
-		})
-	}, [])
 
 	return (
 		<div
 			className="animation-fade-right"
 		>
-
-
 			<h2
 				className="screen__header"
 			>
@@ -268,24 +209,16 @@ const STEP_C = (props) => {
 
 			<ChallengeList
 				challenges={challenges}
-
 				onClick={onChallangeClick}
 			/>
-
-			{/* onClick={() => updateScreen(steps.STEP_CHALLANGE, { 
-                        title: c.title,
-                        description: c.description,
-                        image: c.image
-                     })} */}
-
-			<Button 
+			<Button
 				text="Generate more"
-				onClick={() => {}}
+				onClick={() => { }}
 				style={{
 					marginTop: '1rem'
 				}}
 			/>
-										 		
+
 		</div>
 
 	)
@@ -295,31 +228,65 @@ const STEP_C = (props) => {
 const ChallangeScreen = (props) => {
 	const { updateScreen, screenData } = props
 	const { data } = screenData
+	const { user, notify } = useContext(AppContext)
 
 	console.log(data)
+
+	const onAcceptChallenge = async () => {
+
+		const response = await dataNinja.post('/challenge/create', { 
+			title: data.title,
+			description: data.description,
+			image: data.image,
+			points: data.points,
+			user: user._id,
+			impact: data.impact,
+		})
+
+		notify('Challenge accepted!')
+		updateScreen(steps.STEP_CONFIRM, response.data)
+
+	}
+
+
+
 	return (
 		<div
 			className="animation-fade-right"
 		>
-			<Button
-				text="Back"
-				onClick={() => updateScreen(steps.STEP_C)}
-				style={{
-					margin: '2rem 0 1rem'
-				}}
-			/>
 			<div>
-
 				<Challange
 					challenge={data}
 				/>
 			</div>
 
+
 			<Button
-				text="Accept"
-				onClick={() => updateScreen(steps.STEP_CONFIRM)}
+				text="How does this help?"
+				onClick={() => {
+					notify('Challenge accepted!')
+					updateScreen(steps.STEP_CONFIRM)
+				}}
 				style={{
 					marginTop: '1rem'
+				}}
+			/>
+
+			<Button
+				text="Accept"
+				onClick={onAcceptChallenge}
+				style={{
+					marginTop: '1rem'
+				}}
+			/>
+
+
+
+			<Button
+				text="Back"
+				onClick={() => updateScreen(steps.STEP_C)}
+				style={{
+					margin: '1rem 0 1rem'
 				}}
 			/>
 
@@ -332,17 +299,18 @@ const LoadingScreen = (props) => {
 	const { updateScreen, screenData, setChallenges } = props
 	console.log('screenData', screenData)
 
-	// const getChallanges = async () => {
-	//     const newChallenges = await challangeMe(screenData.data.prompt)
-	//     updateScreen(steps.STEP_C);
-	//     setChallenges(newChallenges)
-	// }
+
+	const getChallanges = async () => {
+		const response = await dataNinja.post('/ai/challenge', { prompt: screenData.prompt })
+		updateScreen(steps.STEP_C);
+		setChallenges(response.data)
+	}
 
 	const getChallangesMock = async () => {
 		setTimeout(() => {
 			updateScreen(steps.STEP_C);
 			setChallenges(challenges)
-		}, 2000);
+		}, 1000);
 	}
 
 	useEffect(() => {
@@ -358,13 +326,7 @@ const LoadingScreen = (props) => {
 			}}
 		>
 			<h2
-				className="animation-fade-right"
-				style={{
-					fontFamily: 'Libre Baskerville',
-					color: '#610000',
-					fontSize: '2.5rem',
-					padding: '3rem 0 2rem'
-				}}
+				className="screen__header"
 			>
 				Thinking of some challanges for you..
 			</h2>
@@ -387,9 +349,13 @@ const LoadingScreen = (props) => {
 	)
 }
 
-const Step_Confirm = () => {
+const Step_Confirm = (props) => {
+	const { screenData } = props
+	const { data } = screenData
+
 	const navigate = useNavigate()
 
+		console.log('screenData', screenData)
 
 	return (
 		<div>
@@ -397,21 +363,22 @@ const Step_Confirm = () => {
 				numberOfPieces={100}
 				gravity={0.1}
 			/>
-			<h2
-				style={{
-					fontFamily: 'Libre Baskerville',
-					color: '#610000',
-					fontSize: '2.5rem',
-					padding: '3rem 0 2rem'
 
-				}}
+			<h2
+				className="screen__header"
 			>
 				Challenge accepted!
 			</h2>
 			<div>
 				<img
-					src="C:/Users/ashmi/Downloads/giphy.gif"
+					style={{
+						height: '20rem',
+					}}
+					src="https://celebi-kcl.s3.eu-north-1.amazonaws.com/gifs/accept_challenge.gif"
 				/>
+			</div>
+			<div>
+					{data?.impact}
 			</div>
 
 			<Button
@@ -425,15 +392,6 @@ const Step_Confirm = () => {
 
 				}}
 			/>
-
-		</div>
-	)
-}
-
-const Home = () => {
-	return (
-		<div>
-
 		</div>
 	)
 }

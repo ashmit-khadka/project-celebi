@@ -23,6 +23,7 @@ const MyChallenges = () => {
     useEffect(() => {
         getChallenges()
     }, [])
+    
 
     return (
         <div>

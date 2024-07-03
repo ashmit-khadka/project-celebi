@@ -1,62 +1,70 @@
 import React from "react"
-import { Link } from "react-router-dom"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom"
 
 const ChallengeList = (props) => {
-    const { updateScreen, screenData, challenges, onClick } = props
+	const { challenges, onClick } = props
 
-    const navigate = useNavigate();
-    console.log(challenges)
-
-    return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1rem',
-            }}
-        >
-            {challenges.map(c => 
-                <div
-                    className="animation-fade-right-slow"
-                    style={{
-                        backgroundColor: 'black',
-                        color: 'white',
-                        padding: '1rem',
-                        display: 'flex',
-                        gap: '1rem',
-                        fontFamily: 'Inconsolata',
-                        fontWeight: '500',
-                        fontSize: '1.6rem',
-                        boxShadow: '-10px 12px 0px 0px #DC7A7A', // Add this line
-                        marginBottom: '10px'
-                    }}
-                    onClick={() => {
-                        onClick(c)
-                        //navigate('/challenge', { state: { challengeId: c._id } });
-                    }}
-                    >
-                    <img 
-                        style={{
-                            height: '5rem',
-                            width: '5rem'
-                        }}
-                        src={c.image}
-                        alt={c.title}
-                    />
-                    <div>
-
-                        <div>{c.title}</div>
-                        <div>Points: {c.points}</div>
-
-                    </div>
-
-                </div>
-
-                )}
-    
-        </div>
-    )
+	return (
+		<div
+			style={{
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '1rem',
+			}}
+		>
+			{challenges.map(c =>
+				<ChallengeItem
+					key={c._id}
+					_id={c._id}
+					title={c.title}
+					image={c.image}
+					points={c.points}
+					onClick={() => onClick ? onClick(c) : null}
+				/>
+			)}
+		</div>
+	)
 }
 
-export default ChallengeList
+const ChallengeItem = (props) => {
+	const { _id, title, image, points, onClick } = props
+
+	const navigate = useNavigate()
+
+	const test = () => {
+		console.log('test')
+	}
+
+	return (
+		<div
+			className="animation-fade-right-slow item__container"
+			style={{
+
+			}}
+			onClick={onClick || navigate('/challenge', { state: { challengeId: _id } })}
+			
+		>
+			<img
+				style={{
+					height: '5rem',
+					width: '5rem'
+				}}
+				src={image}
+				alt={title}
+			/>
+			<div>
+
+				<div
+					className="item__name"
+
+				>{title}</div>
+				<div>
+					Points: {points}
+				</div>
+			</div>
+		</div>
+	)
+}
+
+export default ChallengeList;
+export { ChallengeItem };

@@ -134,6 +134,7 @@ router.get('/create', async (req, res) => {
         email: "ashmit.khadka@mail.com",
         password: await bcrypt.hash("1234", 10),
         type: "registered",
+        bio: "I am a sustainability enthusiast and a student at King's College London. I am passionate about making a positive impact on the planet and inspiring others to do the same. Let's work together to create a greener, healthier future!",
     });
 
     const user_2 = new User({
@@ -143,6 +144,7 @@ router.get('/create', async (req, res) => {
         email: "john.doe@mail.com",
         password: await bcrypt.hash("1234", 10),
         type: "registered",
+        bio: "I am a sustainability enthusiast and a student at King's College London. I am passionate about making a positive impact on the planet and inspiring others to do the same. Let's work together to create a greener, healthier future!",
     });
 
     const user_3 = new User({
@@ -152,6 +154,7 @@ router.get('/create', async (req, res) => {
         email: "jane.doe@mail.com",
         password: await bcrypt.hash("1234", 10),
         type: "registered",
+        bio: "I am a sustainability enthusiast and a student at King's College London. I am passionate about making a positive impact on the planet and inspiring others to do the same. Let's work together to create a greener, healthier future!",
     });
 
     const user_4 = new User({
@@ -161,6 +164,7 @@ router.get('/create', async (req, res) => {
         email: "alice.doe@mail.com",
         password: await bcrypt.hash("1234", 10),
         type: "registered",
+        bio: "I am a sustainability enthusiast and a student at King's College London. I am passionate about making a positive impact on the planet and inspiring others to do the same. Let's work together to create a greener, healthier future!",
     });
 
     const user_5 = new User({
@@ -170,6 +174,7 @@ router.get('/create', async (req, res) => {
         email: "natelia.doe@mail.com",
         password: await bcrypt.hash("1234", 10),
         type: "registered",
+        bio: "I am a sustainability enthusiast and a student at King's College London. I am passionate about making a positive impact on the planet and inspiring others to do the same. Let's work together to create a greener, healthier future!",
     });
 
 
@@ -187,6 +192,8 @@ router.get('/create', async (req, res) => {
         image: "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_1.png",
         user: user_1_id,
         points: 20,
+        created: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
+        impact: "Reducing energy consumption in a challenge promotes sustainability, lowers costs, reduces carbon footprint, and fosters eco-conscious behavior globally",
     });
 
     const challenge_2 = new Challenge({
@@ -195,6 +202,8 @@ router.get('/create', async (req, res) => {
         image: "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_2.png",
         user: user_1_id,
         points: 40,
+        created: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
+        impact: "Promoting biodiversity helps maintain ecosystems, supports food security, and protects endangered species and habitats"
     });
 
     const challenge_3 = new Challenge({
@@ -203,6 +212,8 @@ router.get('/create', async (req, res) => {
         image: "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_3.png",
         user: user_2_id,
         points: 25,
+        created: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
+        impact: "Reducing water consumption conserves natural resources, lowers utility bills, and protects water quality for future generations"
     });
 
     const challenge_4 = new Challenge({
@@ -211,6 +222,8 @@ router.get('/create', async (req, res) => {
         image: "https://celebi-kcl.s3.eu-north-1.amazonaws.com/challenges/mocks/challenge_4.png",
         user: user_2_id,
         points: 20,
+        created: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
+        impact: "Promoting sustainable eating habits helps reduce greenhouse gas emissions, conserve natural resources, and improve public health"
     });
 
 
@@ -228,6 +241,7 @@ router.get('/create', async (req, res) => {
         description: "A group for students and staff at King's College London to share sustainability tips and challenges.",
         owner: user_1_id,
         interval: 7,
+        created: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
     });
 
     const group_2 = new Group({
@@ -237,6 +251,7 @@ router.get('/create', async (req, res) => {
         description: "A group for Google employees to collaborate on sustainability initiatives and challenges.",
         owner: user_2_id,
         interval: 7,
+        created: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     });
 
     const group_3 = new Group({
@@ -246,6 +261,7 @@ router.get('/create', async (req, res) => {
         description: "A group of eco-conscious individuals working together to make a positive impact on the planet.",
         owner: user_3_id,
         interval: 7,
+        created: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
     });
 
     const { _id: group_1_id } = await group_1.save();

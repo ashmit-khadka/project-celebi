@@ -42,6 +42,8 @@ router.get('/find', async (req, res) => {
 });
 
 router.post('/create', upload.single('file'), async (req, res) => {
+  const { userId } = req.query;
+
   const params = {
     Bucket: "celebi-kcl",
     Key: req.file.originalname,
@@ -50,7 +52,7 @@ router.post('/create', upload.single('file'), async (req, res) => {
 
   };
 
-  const user = await User.findOne(); // This gets the first user in the collection
+  //const user = await User.findOne(); // This gets the first user in the collection
 
   s3.upload(params, (err, data) => {
     if (err) {
@@ -67,9 +69,9 @@ router.post('/create', upload.single('file'), async (req, res) => {
         image: data.Location,
         name: req.body.name,
         description: req.body.description,
-        user: user._id,
+        users: [userId],
         interval: req.body.interval,
-        owner: user._id,
+        owner: userId,
         timestamp: new Date(),
       });
       res.send('File uploaded successfully');
@@ -116,6 +118,35 @@ router.get('/delete', async (req, res) => {
   res.send('Group deleted');
 
 });
+
+router.get('/get', async (req, res) => {
+  const { userId } = req.query;
+
+  const groups = await Group.find({
+    users: { $in: [userId] }
+  });
+
+
+  res.send(groups);
+
+});
+
+
+router.get('/shortcut', async (req, res) => {
+  const { userId } = req.query;
+
+  try {
+      const group = await Group.find({ users: { $in: [userId] } })
+      .sort({ createdAt: -1 }) // Sort in descending order by createdAt
+      .limit(1); // Limit to 1 document
+
+    if (!group.length) return res.status(404).send('Group not found');
+    res.send(group[0]);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
 
 
 module.exports = router;

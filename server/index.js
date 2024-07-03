@@ -20,6 +20,7 @@ const postRoutes = require('./routes/post');
 const groupRoutes = require('./routes/group');
 const userRoutes = require('./routes/user');
 const challengeRoutes = require('./routes/challenge');
+const chatbotRoutes = require('./routes/chatbot');
 
 mongoose.connect('mongodb://localhost/celebi', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB'))
@@ -163,6 +164,7 @@ app.use('/post', postRoutes);
 app.use('/group', groupRoutes);
 app.use('/user', userRoutes);
 app.use('/challenge', challengeRoutes);
+app.use('/ai', chatbotRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running at http://192.168.0.31:${port}`);

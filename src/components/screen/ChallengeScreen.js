@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from "../button";
 
 import axios from "axios";
 
-import Challenge from "./challenge";
+import Challenge from "../Challenge";
 
 import dataNinja from "../../utilities/axios";
+import AppContext from "../../utilities/context";
 
 const ChallangeScreen = (props) => {
 
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { setGuide } = useContext(AppContext);
 	const challengeId = location.state?.challengeId;
 
 	const [challenge, setChallenges] = useState({})
@@ -20,7 +22,7 @@ const ChallangeScreen = (props) => {
 	console.log(location.state)
 
 	const getChallange = () => {
-		dataNinja.get(`/challenge/get?id=${challengeId}`)
+		dataNinja.get(`/challenge/list?id=${challengeId}`)
 			.then((res) => {
 				console.log(res)
 				setChallenges(res.data)
@@ -61,6 +63,7 @@ const ChallangeScreen = (props) => {
 					text="Help me"
 					onClick={() => {
 						console.log("Start Challenge")
+						setGuide({ prompt: challenge.title})
 					}}
 				/>
 
